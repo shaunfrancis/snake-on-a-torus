@@ -1001,7 +1001,7 @@ function downloadLeaderboard(interface){
     interface.leaderboardContainer.innerHTML = "Downloading leaderboard...";
 
     let download = new Promise( (resolve,reject) => {
-        fetch('get_leaderboard.php').then( r => r.json() ).then( scores => {
+        fetch('api/get_leaderboard.php').then( r => r.json() ).then( scores => {
             resolve(scores);
         }).catch( error => {
             reject(error);
@@ -1215,7 +1215,7 @@ function submitScore(data){
     return new Promise( (resolve, reject) => {
         if(!window.navigator.onLine) reject({success:false});
         else{
-            fetch('submit_score.php', {
+            fetch('api/submit_score.php', {
                 method: "POST",
                 headers: {'Content-Type': 'application/json'},
                 body: data
@@ -1287,7 +1287,7 @@ class LoginHandler{
 
 function getLoginStatus(){
     return new Promise( (resolve,reject) => {
-        fetch('login_status.php').then( r => r.json() ).then( status => {
+        fetch('api/login_status.php').then( r => r.json() ).then( status => {
             resolve(status);
         });
     });

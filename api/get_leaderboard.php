@@ -1,67 +1,52 @@
 <?php
     if(! isset($_SESSION)) session_start();
+    require 'fetch.php';
 
-    $mysql_host = "*";
-    $mysql_user = "*";
-    $mysql_password = "*";
-    $mysql_database = "*";
+    $top_scores = fetch(
+        "SELECT tennessine_users.username, snake_leaderboard.score, snake_leaderboard.user_id 
+        FROM snake_leaderboard 
+        INNER JOIN tennessine_users ON tennessine_users.id = snake_leaderboard.user_id 
+        ORDER BY snake_leaderboard.score DESC, snake_leaderboard.time DESC LIMIT 10"
+    );
 
-    $conn = new mysqli($mysql_host, $mysql_user, $mysql_password, $mysql_database);
-
-    $stmt = $conn -> prepare("SELECT `tennessine_users`.username, `snake_leaderboard`.score, `snake_leaderboard`.user_id FROM `snake_leaderboard` INNER JOIN `tennessine_users` ON `tennessine_users`.id = `snake_leaderboard`.user_id ORDER BY `snake_leaderboard`.score DESC, `snake_leaderboard`.time DESC LIMIT 10");
-    
-    $stmt -> execute();
-    $stmt -> bind_result($username,$score,$user_id);
-
-    while( $stmt -> fetch() ){
-        if(isset($_SESSION['user_id']) && $_SESSION['user_id'] == $user_id) $scores[] = array('score'=>$score, 'username'=>$username, 'you'=>true);
-        else $scores[] = array('score'=>$score, 'username'=>$username);  
-    }
-
-    $stmt -> close();
-
-    if(isset($_SESSION['user_id'])){
-        $personalStmt = $conn -> prepare("SELECT `tennessine_users`.username, `snake_leaderboard`.score, `snake_leaderboard`.amend_id FROM `snake_leaderboard` INNER JOIN `tennessine_users` ON `tennessine_users`.id = `snake_leaderboard`.user_id WHERE `snake_leaderboard`.user_id = ? ORDER BY `snake_leaderboard`.score DESC LIMIT 1");
-        
-        $personalStmt -> bind_param("s", $_SESSION['user_id']);
-        $personalStmt -> execute();
-        $personalStmt -> bind_result($username,$score,$id);
-
-        while( $personalStmt -> fetch() ){
-            $best_id = $id;
-            $best_score = $score;
-            $best_username = $username;
+    foreach($top_scores as $score){
+        if(isset($_SESSION['user_id']) && $_SESSION['user_id'] == $score['user_id']){
+            $scores[] = array('score' => $score['score'], 'username' => $score['username'], 'you' => true);
         }
+        else $scores[] = array('score' => $score['score'], 'username' => $score['username']);  
+    }
+    
+    if(isset($_SESSION['user_id'])){
+        $users_best_score = fetch(
+            "SELECT tennessine_users.username, snake_leaderboard.score, snake_leaderboard.amend_id as id 
+            FROM snake_leaderboard 
+            INNER JOIN tennessine_users ON tennessine_users.id = snake_leaderboard.user_id 
+            WHERE snake_leaderboard.user_id = ? 
+            ORDER BY snake_leaderboard.score DESC LIMIT 1",
+            [$_SESSION['user_id']]
+        );
 
-        if($best_id){
-            $position = getPlacement($conn, $_SESSION['user_id']);
+        if(count($users_best_score) !== 0){
+            $best = $users_best_score[0];
+            $position = getBestPlacement($_SESSION['user_id']);
             if($position){
-                $scores[] = array('score'=>$best_score, 'username'=>$username, 'position'=>$position, 'you'=>true);
+                $scores[] = array('score'=>$best['score'], 'username'=>$best['username'], 'position'=>$position, 'you'=>true);
             }
         }
     }
 
-    $conn -> close();
-
     echo json_encode($scores);
 
-    function getPlacement($conn, $id){
-        $stmt = $conn -> prepare("SELECT COUNT(*) + 1 FROM `snake_leaderboard` WHERE  `score` > (SELECT `score` FROM `snake_leaderboard` WHERE `user_id` = ? ORDER BY `score` DESC LIMIT 1) AND `user_id` IS NOT NULL");
+    function getBestPlacement($id){
+        $placement = fetch(
+            "SELECT COUNT(*) + 1 as position FROM snake_leaderboard 
+            WHERE  score > (
+                SELECT score FROM snake_leaderboard WHERE user_id = ? ORDER BY score DESC LIMIT 1
+            ) AND user_id IS NOT NULL",
+            [$id]
+        );
 
-        $stmt -> bind_param("s", $id);
-        
-        $stmt -> execute();
-
-        $stmt -> bind_result($position);
-
-        while($stmt -> fetch()){ //can't work this out
-            $pos = $position;
-        }
-
-        if($pos) return $pos;
-        else return "false";
-
-        $stmt -> close();
+        return $placement[0]['position'];
     }
 
 ?>

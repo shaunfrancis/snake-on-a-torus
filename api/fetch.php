@@ -1,4 +1,6 @@
 <?php
+    require 'db.php';
+    
     function fetch($sql, $params = []){
         global $pdo;
         $stmt = $pdo -> prepare($sql);
@@ -21,6 +23,6 @@
         };
         
         http_response_code($status);
-        exit( json_encode( array("error" => $error) ) );
+        exit( json_encode( array("success" => "false", "reason" => $error) ) );
     }
 ?>

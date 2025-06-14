@@ -1022,7 +1022,7 @@ function downloadLeaderboard(interface, since = globalSince){
 
         let position = 0, hold = 1, previousScore = -1;
         scores.forEach(row => {
-            if(row.position && row.score > previousScore) return;
+            if(row.position && parseInt(row.score) > previousScore) return;
 
             let container = document.createElement('div');
             container.classList.add('table-row');
@@ -1032,11 +1032,11 @@ function downloadLeaderboard(interface, since = globalSince){
             let positionCell = document.createElement('div');
             positionCell.classList.add('table-cell','position-cell');
             
-            if(previousScore == row.score) hold++;
+            if(previousScore == parseInt(row.score)) hold++;
             else{
                 position += hold;
                 hold = 1;
-                previousScore = row.score;
+                previousScore = parseInt(row.score);
             }
 
             if(position <= 3){

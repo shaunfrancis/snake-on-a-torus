@@ -1,0 +1,436 @@
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+
+*{
+    -webkit-user-select:none;
+    -moz-user-select:none;
+    user-select:none;
+}
+
+#header{ position:absolute !important }
+#header:not(.hamburger-open){
+    position:absolute;
+    background:none;
+    box-shadow:none;
+    color:white;
+    text-shadow:0 8px 16px rgba(0,0,0,.5);
+}
+#header:not(.hamburger-open) #header-logo{
+    border:2px solid white;
+    filter:drop-shadow(0 8px 10px black);
+}
+#header:not(.hamburger-open) #header-hamburger svg{
+    fill:#fff;
+    filter:drop-shadow(0 8px 10px black);
+}
+#basket-container svg{ filter:drop-shadow(0 8px 10px black) }
+
+html{
+    height: -webkit-fill-available; 
+    font-size:16px;
+}
+  
+body{
+    width:100%;
+    min-height: 100vh;
+    min-height: -webkit-fill-available;
+    margin:0;
+    padding:0;
+    font-family: 'Press Start 2P', sans-serif;
+    display:flex;
+    flex-direction:column;
+    background:black;
+    max-height:100vh;
+    overflow:hidden;
+}
+
+#container{
+    width:100%;
+    flex-grow:1;
+    display:flex;
+    flex-direction:column;
+    overflow:auto;
+    position:relative;
+}
+
+h1{ 
+    font-size: 3.5rem;
+}
+
+#logo{
+    position:relative;
+    padding:0 0 20px 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+#logo-title{
+    color:transparent;
+    font-size: 6rem;
+    transform:rotateX(30deg);
+    transform-origin:50% 0;
+    text-shadow:0 1px 0 white, 0 2px 0 rgb(200,200,200), 0 3px 0 white, 0 4px 0 rgb(200,200,200), 0 5px 0 white, 0 6px 0 rgb(200,200,200), 0 7px 0 white, 0 8px 0 rgb(200,200,200), 0 9px 0 white, 0 10px 0 rgb(200,200,200), 0 11px 0 white, 0 12px 0 rgb(200,200,200), 0 13px 0 white, 0 14px 0 rgb(200,200,200), 0 15px 0 white, 0 16px 0 rgb(200,200,200), 0 17px 0 white, 0 18px 0 rgb(200,200,200), 0 19px 0 white, 0 20px 0 rgb(200,200,200), 0 21px 0 white, 0 22px 0 rgb(200,200,200), 0 23px 0 white, 0 24px 0 rgb(200,200,200), 0 25px 0 white, 0 26px 0 rgb(200,200,200), 0 27px 0 white, 0 28px 0 rgb(200,200,200), 0 29px 0 white, 0 30px 0 rgb(200,200,200), 0 38px 10px rgb(0,0,0);
+}
+
+#logo-title:before, #logo-title:after{
+    content: "SNAKE";
+    text-shadow:none;
+    position:absolute;
+    left:0;    
+    -webkit-background-clip: text;
+    background-clip:text;
+    -webkit-text-fill-color: transparent;
+}
+
+#logo-title:before{
+    background-image: linear-gradient(0deg, #c4e1a4 0%, rgb(85, 139, 47) 100%);
+}
+
+#logo-title:after{
+    opacity:0.4;
+    background-image: linear-gradient(0deg, #c4e1a4 7.14%, rgb(85, 139, 47) 7.14%, rgb(85, 139, 47) 21.43%, rgb(139, 195, 74) 21.43%, rgb(139, 195, 74) 50%, #c4e1a4 50%, #c4e1a4 57.14%, rgb(85, 139, 47) 57.14%, rgb(85, 139, 47) 71.43%, rgb(139, 195, 74) 71.43%, rgb(139, 195, 74) 100%);
+}
+
+#logo-subtitle{
+    position:relative;
+    transform:scale(1,0.7);
+    padding:38px 0;
+}
+
+#logo-subtitle span{
+    display:inline-block;
+    transform-origin:0;
+}
+
+.line-decoration:before, .line-decoration:after{
+    content: "";
+    width:100%;
+    height:30px;
+    position:absolute;
+    left:0;
+    filter:drop-shadow(0 8px 16px black);
+    transform:translate(-5px, 0);
+    z-index:-1;
+}
+
+.line-decoration:before{
+    top:-5px;
+    background:linear-gradient(to bottom, rgb(85, 139, 47) 0%, rgb(85, 139, 47) 25%, transparent 25%, transparent 37.5%, rgb(139, 195, 74) 37.5%, rgb(139, 195, 74) 62.5%, transparent 62.5%, transparent 75%, white 75%, white 100%);
+}
+
+.line-decoration:after{
+    bottom:0;
+    background:linear-gradient(to top, rgb(85, 139, 47) 0%, rgb(85, 139, 47) 25%, transparent 25%, transparent 37.5%, rgb(139, 195, 74) 37.5%, rgb(139, 195, 74) 62.5%, transparent 62.5%, transparent 75%, white 75%, white 100%);
+}
+
+.subtitle-spacer{
+    display:inline-block;
+    width:10px;
+    height:5px;
+}
+
+.subtitle-letter-container{
+    display:inline-block;
+}
+
+.flashing-options{
+    display:flex;
+    flex-direction:column;
+    align-self:center;
+    margin-left:-82px;
+    flex:1 0;
+    justify-content:center;
+}
+
+.flashing-option{
+    font-size:2rem;
+    cursor:pointer;
+    display:flex;
+    padding:20px 0;
+}
+
+.flashing-option-arrow{
+    margin:0 25px;
+}
+
+.flashing-option-arrow:before{
+    content:"> ";
+    opacity:0;
+}
+
+.flashing-option.focus .flashing-option-arrow:before{
+    opacity:1;
+    animation:flash 500ms infinite;
+}
+
+.flashing-option-label{
+    flex:1 0;
+    text-align:center;
+}
+
+
+#game-area{
+    position:fixed;
+    z-index:-1;
+    top:0;
+    left:0;
+    width:100vw;
+    height:100vh;
+}
+
+.interface{
+    color:white;
+    text-shadow:0 8px 16px rgba(0,0,0,.5);
+    text-align:center;
+    opacity:0;
+    pointer-events:none;
+    padding:0 20px;
+    position:relative;
+    z-index:2;
+}
+
+.interface.visible{
+    opacity:1;
+    pointer-events:auto;
+    overflow:unset;
+}
+
+#screen-interfaces{
+    display:flex;
+    flex-direction:column;
+    flex-grow:1;
+    justify-content:center;
+    padding-bottom:20px;
+}
+
+#screen-interfaces .interface{
+    flex:0 1 0px;
+    overflow:hidden;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+}
+
+#screen-interfaces .interface.visible{
+    overflow:unset;
+    flex-grow:1;
+}
+
+
+@media (orientation: portrait){
+    #screen-interfaces .interface.visible{ /*prevent hiding back buttons in mobile*/
+        padding-bottom:100px;
+    }
+}
+
+#game-header{
+    padding-top:50px;
+    display:flex;
+}
+
+.header-section-container{
+    display:flex;
+    flex:1 0 33%;
+    flex-direction:column;
+    text-align:center;
+    text-shadow:0 8px 16px rgba(0,0,0,.5);
+}
+
+.header-section-item{
+    font-size:1.6rem;
+    display:flex;
+    justify-content:center;
+    height:26px;
+    align-items:center;
+}
+
+.header-section-button{
+    cursor:pointer;
+    flex:0 1 30px;
+    height:26px;
+    margin:0 5px;
+    background-size:contain;
+    background-position:center;
+    background-repeat:no-repeat;
+    filter: drop-shadow(0 8px 16px rgba(0,0,0,.5));
+}
+.header-section-button:active{
+    transform:scale(0.95);
+}
+
+#header-pause-button{ background-image:url(icons/pause.svg) }
+
+#game-header, #game-start-interface{transition:opacity 500ms}
+
+#game-footer{
+    height:0;
+    transition:oapcity 500ms, height: 2000ms;
+}
+#game-footer.visible{
+    height:57px;
+    transition:opacity 500ms;
+}
+
+#game-over-interface h1{
+    animation:flash 500ms 5 forwards paused;
+}
+#game-over-interface.visible h1{ animation-play-state:running }
+
+#game-paused-interface .flashing-options{flex-grow:0}
+
+.table{
+    display:flex;
+    flex-direction:column;
+    align-self:center;
+    font-size:1.6em;
+}
+
+.table-row{
+    display:flex;
+    padding:10px 0;
+}
+
+.highlighted{
+    color:gold;
+}
+
+.table-cell{
+    display:flex;
+    flex-wrap:wrap;
+}
+
+.option-button{
+    cursor:pointer;
+    padding:10px;
+    margin:0 5px;
+}
+
+.option-button.selected{
+    text-decoration:underline;
+}
+
+.option-button.inactive{
+    opacity:0.7;
+    text-decoration:line-through;
+    cursor:default;
+}
+
+#options-table{
+    width:800px;
+    max-width:calc(100vw - 40px);
+    margin-bottom:20px;
+}
+
+#options-table .table-row{
+    padding:15px 0;
+}
+
+#options-table .table-cell:first-child{ flex:0 0 250px; padding:10px }
+
+.table-dots{
+    flex:1;
+    overflow:hidden;
+    margin:0 10px;
+}
+.table-dots:before{
+    content: "........................................................................";
+    overflow:hidden;
+}
+
+#leaderboard-container{
+    width:900px;
+    max-width:calc(100vw - 40px);
+    margin-bottom:20px;
+}
+
+.position-cell{
+    flex:0 0 110px;
+    padding-right:15px;
+    display:block;
+    text-align:right;
+}
+
+.medal{
+    background-size:contain;
+    background-repeat:no-repeat;
+    display:inline-block;
+    width:30px;
+    height:30px;
+    margin-right:10px;
+    filter:drop-shadow(0 8px 10px rgba(0,0,0,.5));
+}
+
+.username-cell{
+    text-align:left;
+    word-break:break-word;
+}
+
+#game-over-score-container{
+    position:relative;
+    width:300px;
+    max-width:calc(100vw - 40px);
+    font-size: 2.5rem;
+    align-self:center;
+    margin-bottom:30px;
+}
+
+#game-over-score-interface{
+    width:800px;
+    max-width:calc(100vw - 40px);
+    margin-bottom:50px;
+    align-self:center;
+}
+
+#game-over-score-interface p{
+    font-size:1.4rem;
+}
+
+#game-over-score{
+    padding:40px 0;
+}
+
+@keyframes flash{
+    0%{ opacity: 1 }
+    49%{ opacity: 1 }
+    50%{ opacity: 0 }
+    99%{ opacity: 0 }
+    100% {opacity: 1}
+}
+
+@media screen and (max-width: 600px){
+    html{
+        font-size: 10px;
+    }
+
+    #logo-title{
+        text-shadow:0 1px 0 white, 0 2px 0 rgb(200,200,200), 0 3px 0 white, 0 4px 0 rgb(200,200,200), 0 5px 0 white, 0 6px 0 rgb(200,200,200), 0 7px 0 white, 0 8px 0 rgb(200,200,200), 0 9px 0 white, 0 10px 0 rgb(200,200,200), 0 11px 0 white, 0 12px 0 rgb(200,200,200), 0 13px 0 white, 0 14px 0 rgb(200,200,200), 0 15px 0 white, 0 16px 0 rgb(200,200,200), 0 17px 0 white, 0 18px 0 rgb(200,200,200), 0 19px 0 white, 0 20px 0 rgb(200,200,200), 0 28px 10px rgb(0,0,0);
+    }
+
+    
+    #options-table .table-cell:first-child{ flex:0 0 150px; padding:10px }
+
+    .header-section-button{
+        height:20px;
+        background-size:center -2px;
+    }
+
+    .medal{
+        display:none;
+    }
+
+    .position-cell{
+        flex:0 0 0;
+    }
+
+}
+
+.medal[data-position="1"]{
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' id='svg8' viewBox='0 0 8 10'%3E%3Cg%3E%3Cpath transform='scale(0.26458333)' d='M 7.5585938 0 L 7.5585938 3.7792969 L 3.7792969 3.7792969 L 3.7792969 7.5585938 L 0 7.5585938 L 0 11.337891 L 0 15.117188 L 0 18.898438 L 3.7792969 18.898438 L 3.7792969 22.677734 L 7.5585938 22.677734 L 7.5585938 26.457031 L 11.337891 26.457031 L 15.117188 26.457031 L 18.898438 26.457031 L 22.677734 26.457031 L 22.677734 22.677734 L 26.457031 22.677734 L 26.457031 18.898438 L 30.236328 18.898438 L 30.236328 15.117188 L 30.236328 11.337891 L 30.236328 7.5585938 L 26.457031 7.5585938 L 26.457031 3.7792969 L 22.677734 3.7792969 L 22.677734 0 L 18.898438 0 L 15.117188 0 L 11.337891 0 L 7.5585938 0 z ' style='fill:gold' /%3E%3Cpath d='M 0,10 H 2 V 8 H 0 Z M 1,9.0000894 h 2 v -2 H 1 Z' style='fill:%23fff'/%3E%3Cpath style='fill:%23fff' d='m 8.0000001,9.9999105 h -2 V 7.9999106 h 2 z M 7.0000001,9 H 5 V 7 h 2.0000001 z' /%3E%3C/g%3E%3C/svg%3E");
+}
+.medal[data-position="2"]{
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' id='svg8' viewBox='0 0 8 10'%3E%3Cg%3E%3Cpath transform='scale(0.26458333)' d='M 7.5585938 0 L 7.5585938 3.7792969 L 3.7792969 3.7792969 L 3.7792969 7.5585938 L 0 7.5585938 L 0 11.337891 L 0 15.117188 L 0 18.898438 L 3.7792969 18.898438 L 3.7792969 22.677734 L 7.5585938 22.677734 L 7.5585938 26.457031 L 11.337891 26.457031 L 15.117188 26.457031 L 18.898438 26.457031 L 22.677734 26.457031 L 22.677734 22.677734 L 26.457031 22.677734 L 26.457031 18.898438 L 30.236328 18.898438 L 30.236328 15.117188 L 30.236328 11.337891 L 30.236328 7.5585938 L 26.457031 7.5585938 L 26.457031 3.7792969 L 22.677734 3.7792969 L 22.677734 0 L 18.898438 0 L 15.117188 0 L 11.337891 0 L 7.5585938 0 z ' style='fill:silver' /%3E%3Cpath d='M 0,10 H 2 V 8 H 0 Z M 1,9.0000894 h 2 v -2 H 1 Z' style='fill:%23fff'/%3E%3Cpath style='fill:%23fff' d='m 8.0000001,9.9999105 h -2 V 7.9999106 h 2 z M 7.0000001,9 H 5 V 7 h 2.0000001 z' /%3E%3C/g%3E%3C/svg%3E");
+}
+.medal[data-position="3"]{
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' id='svg8' viewBox='0 0 8 10'%3E%3Cg%3E%3Cpath transform='scale(0.26458333)' d='M 7.5585938 0 L 7.5585938 3.7792969 L 3.7792969 3.7792969 L 3.7792969 7.5585938 L 0 7.5585938 L 0 11.337891 L 0 15.117188 L 0 18.898438 L 3.7792969 18.898438 L 3.7792969 22.677734 L 7.5585938 22.677734 L 7.5585938 26.457031 L 11.337891 26.457031 L 15.117188 26.457031 L 18.898438 26.457031 L 22.677734 26.457031 L 22.677734 22.677734 L 26.457031 22.677734 L 26.457031 18.898438 L 30.236328 18.898438 L 30.236328 15.117188 L 30.236328 11.337891 L 30.236328 7.5585938 L 26.457031 7.5585938 L 26.457031 3.7792969 L 22.677734 3.7792969 L 22.677734 0 L 18.898438 0 L 15.117188 0 L 11.337891 0 L 7.5585938 0 z ' style='fill:%23cd7f32' /%3E%3Cpath d='M 0,10 H 2 V 8 H 0 Z M 1,9.0000894 h 2 v -2 H 1 Z' style='fill:%23fff'/%3E%3Cpath style='fill:%23fff' d='m 8.0000001,9.9999105 h -2 V 7.9999106 h 2 z M 7.0000001,9 H 5 V 7 h 2.0000001 z' /%3E%3C/g%3E%3C/svg%3E");
+}

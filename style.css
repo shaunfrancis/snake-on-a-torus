@@ -265,7 +265,7 @@ h1{
 
 #game-footer{
     height:0;
-    transition:opacity 500ms, height 2000ms;
+    transition:opacity 500ms;
 }
 #game-footer.visible{
     height:57px;

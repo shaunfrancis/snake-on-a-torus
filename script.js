@@ -944,6 +944,13 @@ window.addEventListener('DOMContentLoaded', () => {
         return level.soundEffects == p;
     }, clickSound);
 
+    let leaderboardSinceData = [{label:"Week", param:'week'},{label:"Month", param:'month'},{label:"Year", param:'year'},{label:"All-time", param:'all-time'}];
+    installOptions(leaderboardSinceData, document.getElementById('leaderboard-since-container'), (p) => {
+        downloadLeaderboard(interfaces.leaderboard, p);
+    }, (p) => {
+        return p === "all-time"
+    }, clickSound);
+
     let T = {r: 8, t: 3, w: 28, h: 16};
     
     let torus = createTorus(...Object.values(T));
@@ -997,11 +1004,13 @@ function installOptions(data,container,clickFun,selectFun, clickSound){
     }
 }
 
-function downloadLeaderboard(interface){
+let globalSince = 'all-time';
+function downloadLeaderboard(interface, since = globalSince){
     interface.leaderboardContainer.innerHTML = "Downloading leaderboard...";
+    globalSince = since;
 
     let download = new Promise( (resolve,reject) => {
-        fetch('api/get_leaderboard.php').then( r => r.json() ).then( scores => {
+        fetch('api/get_leaderboard.php?since=' + since).then( r => r.json() ).then( scores => {
             resolve(scores);
         }).catch( error => {
             reject(error);
@@ -1185,7 +1194,7 @@ function handleScoreInterface(result, data, container){
             p.innerHTML = "logged in, total success - placement = " + result.position;
 
             if(result.position && parseInt(result.position) <= 10) p.innerHTML = "Congratulations! You are position <span class='highlighted'>" + result.position + "</span> on the leaderboard!";
-            else if(result.position) p.innerHTML = "You are position <span class='highlighted'>" + result.position + "</span> on the leaderboard!";
+            else if(result.position) p.innerHTML = "You are position <span class='highlighted'>" + result.position + "</span> on the all-time leaderboard!";
             else p.innerHTML = "Your score has been submitted to the leaderboard.";
 
             container.appendChild(p);

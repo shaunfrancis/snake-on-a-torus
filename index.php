@@ -110,6 +110,13 @@
 
         <div id="leaderboard-interface" class="interface">
           <h1 data-squeeze="true">LEADERBOARD</h1>
+
+          <div class="table">
+            <div class="table-row">
+              <div class="table-cell" id="leaderboard-since-container">
+              </div>
+            </div>
+          </div>
           
           <div id="leaderboard-container" class="table">Downloading leaderboard...</div>
 
@@ -162,7 +169,7 @@
     </div>
 
       <div id="game-footer" class="interface">
-        <h3>&copy; MMXXI TENNESSINE</h3>
+        <h3>&copy; <?= (new NumberFormatter('@numbers=roman', NumberFormatter::DECIMAL))->format(date("Y")) ?> TENNESSINE &bull; v1.1.0</h3>
       </div>
     </div>
 

@@ -259,13 +259,13 @@ h1{
     transform:scale(0.95);
 }
 
-#header-pause-button{ background-image:url(icons/pause.svg) }
+#header-pause-button{ background-image:url(assets/icons/pause.svg) }
 
 #game-header, #game-start-interface{transition:opacity 500ms}
 
 #game-footer{
     height:0;
-    transition:oapcity 500ms, height: 2000ms;
+    transition:opacity 500ms, height 2000ms;
 }
 #game-footer.visible{
     height:57px;

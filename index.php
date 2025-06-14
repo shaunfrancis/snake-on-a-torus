@@ -167,14 +167,14 @@
     </div>
 
     <div style="display:none">
-      <img src="icons/pause.svg" />
-      <img src="icons/play.svg" />
-      <img src="icons/mute.svg" />
-      <img src="icons/sound.svg" />
-      <img src="icons/low.svg" />
-      <img src="icons/med.svg" />
-      <img src="icons/high.svg" />
-      <img src="icons/max.svg" />
+      <img src="assets/icons/pause.svg" />
+      <img src="assets/icons/play.svg" />
+      <img src="assets/icons/mute.svg" />
+      <img src="assets/icons/sound.svg" />
+      <img src="assets/icons/low.svg" />
+      <img src="assets/icons/med.svg" />
+      <img src="assets/icons/high.svg" />
+      <img src="assets/icons/max.svg" />
     </div>
 
 </body>

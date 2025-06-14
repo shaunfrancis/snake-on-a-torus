@@ -7,9 +7,9 @@ class Level{
 
         this.score = 0;
 
-        this.appleSound = new Audio("apple.mp3");
+        this.appleSound = new Audio("assets/audio/apple.mp3");
         this.appleSound.volume = 0.2;
-        this.dieSound = new Audio("die.mp3");
+        this.dieSound = new Audio("assets/audio/die.mp3");
         this.dieSound.volume = 0.2;
 
         let bypassSafariMediaRestrictions = () => {
@@ -27,7 +27,7 @@ class Level{
         window.addEventListener('touchend', bypassSafariMediaRestrictions);
 
         this.scene = new THREE.Scene();
-        this.scene.background = (new THREE.TextureLoader).load("lowres.png", (texture) => {
+        this.scene.background = (new THREE.TextureLoader).load("assets/lowres.png", (texture) => {
             texture.repeat.set(-0.25,-0.25);
             texture.offset.set(0.5,0.5);
         });
@@ -50,7 +50,7 @@ class Level{
         let background = new THREE.Mesh(
             new THREE.SphereGeometry(50,10,10),
             new THREE.MeshLambertMaterial({
-                map: (new THREE.TextureLoader).load("background.jpg"),
+                map: (new THREE.TextureLoader).load("assets/background.jpg"),
                 side: THREE.BackSide
             })
         );
@@ -115,22 +115,22 @@ class Level{
             case "3":
                 this.renderer.setPixelRatio(window.devicePixelRatio);
                 this.scene.add(this.background);
-                this.els.qualityButton.style.backgroundImage = "url(icons/max.svg)";
+                this.els.qualityButton.style.backgroundImage = "url(assets/icons/max.svg)";
                 break;
             case "2":
                 this.renderer.setPixelRatio(1);
                 this.scene.add(this.background);
-                this.els.qualityButton.style.backgroundImage = "url(icons/high.svg)";
+                this.els.qualityButton.style.backgroundImage = "url(assets/icons/high.svg)";
                 break;
             case "1":
                 this.renderer.setPixelRatio(0.5);
                 this.scene.add(this.background);
-                this.els.qualityButton.style.backgroundImage = "url(icons/med.svg)";
+                this.els.qualityButton.style.backgroundImage = "url(assets/icons/med.svg)";
                 break;
             case "0":
                 this.renderer.setPixelRatio(0.5);
                 this.scene.remove(this.background);
-                this.els.qualityButton.style.backgroundImage = "url(icons/low.svg)";
+                this.els.qualityButton.style.backgroundImage = "url(assets/icons/low.svg)";
                 break;
         }
         localStorage.setItem('snake_quality', n);
@@ -149,8 +149,8 @@ class Level{
         localStorage.setItem('snake_sound_effects', b);
         this.soundEffects = b;
 
-        if(b == 1) this.els.soundButton.style.backgroundImage = "url(icons/sound.svg)";
-        else this.els.soundButton.style.backgroundImage = "url(icons/mute.svg)";
+        if(b == 1) this.els.soundButton.style.backgroundImage = "url(assets/icons/sound.svg)";
+        else this.els.soundButton.style.backgroundImage = "url(assets/icons/mute.svg)";
     }
 
     addObject(mesh){
@@ -344,7 +344,7 @@ class Level{
         this.ambience.intensity = 0;
         this.render();
 
-        this.els.pauseButton.style.backgroundImage = "url(icons/play.svg)";
+        this.els.pauseButton.style.backgroundImage = "url(assets/icons/play.svg)";
         this.interfaces.gamePaused.container.classList.add('visible');
     }
     
@@ -354,7 +354,7 @@ class Level{
         this.spotlight.intensity = 0.5;
         this.ambience.intensity = 0.3;
 
-        this.els.pauseButton.style.backgroundImage = "url(icons/pause.svg)";
+        this.els.pauseButton.style.backgroundImage = "url(assets/icons/pause.svg)";
         this.interfaces.gamePaused.container.classList.remove('visible');
         this.render();
     }
@@ -852,7 +852,7 @@ window.addEventListener('DOMContentLoaded', () => {
 
     squeezeElements();
 
-    let clickSound = new Audio("move.mp3");
+    let clickSound = new Audio("assets/audio/move.mp3");
     clickSound.volume = 0.2;
 
     let interfaces = { header: new Interface('game-header', clickSound), mainMenu: new Interface('game-start-interface', clickSound), leaderboard: new Interface('leaderboard-interface', clickSound), options: new Interface('options-interface', clickSound), footer: new Interface('game-footer', clickSound), gameOver: new Interface('game-over-interface', clickSound), gamePaused: new Interface('game-paused-interface', clickSound) };

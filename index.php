@@ -169,7 +169,7 @@
     </div>
 
       <div id="game-footer" class="interface">
-        <h3>&copy; <?= (new NumberFormatter('@numbers=roman', NumberFormatter::DECIMAL))->format(date("Y")) ?> TENNESSINE &bull; v1.1.0</h3>
+        <h3>&copy; <?= (new NumberFormatter('en@numbers=roman', NumberFormatter::DECIMAL))->format(date("Y")) ?> TENNESSINE &bull; v1.1.1</h3>
       </div>
     </div>
 

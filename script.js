@@ -1053,7 +1053,11 @@ function downloadLeaderboard(interface, since = globalSince){
 
             let user = document.createElement('div');
             user.classList.add('table-cell','username-cell');
-            user.innerHTML = row.username;
+            if(row.subscription_active){
+                const shield = '<svg onclick="window.open(\'/support-us\')" fill="currentColor" version="1.1" viewBox="0 0 270 300" xml:space="preserve" xmlns="http://www.w3.org/2000/svg"><path d="m0 0v180h30v60h30v30h30v30h90v-30h30v-30h30v-60h30v-180h-30v30h-60v-30h-90v30h-60v-30zm60 60h150v30h-30v30h30v30h-30v30h-30v30h-90v-90h90v-30h-90zm90 60v30h30v-30zm-60 30v30h30v-30z" stroke-width="24.217"/></svg>';
+                user.innerHTML = shield + '<span>' + row.username + '</span>';
+            }
+            else user.innerHTML = row.username;
 
             let dots = document.createElement('div');
             dots.classList.add('table-dots');
@@ -1285,8 +1289,19 @@ class LoginHandler{
             if(status.status == 0) this.loginButton.innerHTML = "Log in";
             else this.loginButton.innerHTML = status.user;
         }
-        if(status.status == 0) document.getElementById('header-login-id-a').innerHTML = "Log in";
-        else document.getElementById('header-login-id-a').innerHTML = status.user;
+
+        if(status.subscription_active){
+            fetch('/assets/supporter-shield-white.svg').then( response => {
+                if(response.ok) return response.text();
+                else throw new Error();
+            }).then( svg => {
+                document.getElementById('header-login-id-a').innerHTML = svg + "<span>" + status.user + "</span>";
+            }).catch( _ => {
+                document.getElementById('header-login-id-a').innerHTML = status.user;
+            });
+        }
+        else if(status.status == 1) document.getElementById('header-login-id-a').innerHTML = status.user;
+        else document.getElementById('header-login-id-a').innerHTML = "Log in";
 
         this.status = status.status;
         this.user = status.user;
@@ -1306,7 +1321,7 @@ function hijackHeader(){
     let loginButton = document.getElementById('header-login-id-a');
     loginButton.removeAttribute('href');
     loginButton.innerHTML = "";
-    let headerControl = new LoginHandler(loginButton, true);
+    let headerControl = new LoginHandler(loginButton);
 }
 
 function squeezeElements(){

@@ -27,9 +27,9 @@
 
     foreach($top_scores as $score){
         if(isset($_SESSION['user_id']) && $_SESSION['user_id'] == $score['user_id']){
-            $scores[] = array('score' => $score['score'], 'username' => $score['username'], 'subscription_active' => $score['subscription_active'], 'you' => true);
+            $scores[] = array('score' => $score['score'], 'username' => $score['username'], 'subscription_active' => !empty($score['subscription_active']), 'you' => true);
         }
-        else $scores[] = array('score' => $score['score'], 'username' => $score['username'], 'subscription_active' => $score['subscription_active']);  
+        else $scores[] = array('score' => $score['score'], 'username' => $score['username'], 'subscription_active' => !empty($score['subscription_active']));  
     }
     
     if(isset($_SESSION['user_id'])){
@@ -50,7 +50,7 @@
             $best = $users_best_score[0];
             $position = getBestPlacement($_SESSION['user_id']);
             if($position){
-                $scores[] = array('score'=>$best['score'], 'username'=>$best['username'], 'position'=>$position, 'subscription_active'=>$best['subscription_active'], 'you'=>true);
+                $scores[] = array('score'=>$best['score'], 'username'=>$best['username'], 'position'=>$position, 'subscription_active'=>!empty($best['subscription_active']), 'you'=>true);
             }
         }
     }
